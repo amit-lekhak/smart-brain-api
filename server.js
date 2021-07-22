@@ -3,7 +3,10 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const knex = require("knex");
 require("dotenv").config();
+const bcrypt = require("bcryptjs");
 
+const loginController = require("./controllers/login");
+const registerController = require("./controllers/register");
 
 const db = knex({
   client: "pg",
@@ -15,14 +18,21 @@ const db = knex({
   },
 });
 
-
 const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
 
-app.get("/api/", (req, res) => {
+app.get("/api", (req, res) => {
   res.status(200).send("Smart Brain Api");
+});
+
+app.post("/api/login", (req, res) => {
+  loginController.loginUser(req, res, db, bcrypt);
+});
+
+app.post("/api/register", (req, res) => {
+  registerController.signupUser(req, res, db, bcrypt);
 });
 
 const PORT = process.env.PORT || 8000;
