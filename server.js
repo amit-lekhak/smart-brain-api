@@ -40,6 +40,10 @@ app.post("/api/detectface", (req, res) => {
   imageController.detectface(req, res);
 });
 
+app.put("/api/profile", (req, res) => {
+  imageController.updateEntriesCount(req, res, db);
+});
+
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server running on port: ${PORT}`);
