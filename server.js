@@ -7,6 +7,7 @@ const bcrypt = require("bcryptjs");
 
 const loginController = require("./controllers/login");
 const registerController = require("./controllers/register");
+const imageController = require("./controllers/image");
 
 const db = knex({
   client: "pg",
@@ -33,6 +34,10 @@ app.post("/api/login", (req, res) => {
 
 app.post("/api/register", (req, res) => {
   registerController.signupUser(req, res, db, bcrypt);
+});
+
+app.post("/api/detectface", (req, res) => {
+  imageController.detectface(req, res);
 });
 
 const PORT = process.env.PORT || 8000;
