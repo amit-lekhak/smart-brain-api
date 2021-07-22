@@ -4,6 +4,7 @@ const cors = require("cors");
 const knex = require("knex");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
+const morgan = require("morgan");
 
 const loginController = require("./controllers/login");
 const registerController = require("./controllers/register");
@@ -23,6 +24,7 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+app.use(morgan("dev"));
 
 app.get("/api", (req, res) => {
   res.status(200).send("Smart Brain Api");
