@@ -1,0 +1,23 @@
+{
+  "name": "smart-brain-api",
+  "version": "1.0.0",
+  "description": "backend for smart brain app",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "author": "Amit Lekhak",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "clarifai": "^2.9.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "knex": "^0.21.6",
+    "pg": "^8.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  }
+}
