@@ -10,14 +10,19 @@ const loginController = require("./controllers/login");
 const registerController = require("./controllers/register");
 const imageController = require("./controllers/image");
 
+// const db = knex({
+//   client: "pg",
+//   connection: {
+//     host: process.env.POSTGRES_HOST,
+//     user: process.env.POSTGRES_USER_NAME,
+//     password: process.env.POSTGRES_USER_PASSWORD,
+//     database: process.env.POSTGRES_DATABASE_NAME,
+//   },
+// });
+
 const db = knex({
   client: "pg",
-  connection: {
-    host: "127.0.0.1",
-    user: process.env.POSTGRES_USER_NAME,
-    password: process.env.POSTGRES_USER_PASSWORD,
-    database: process.env.POSTGRES_DATABASE_NAME,
-  },
+  connection: process.env.POSTGRES_URI,
 });
 
 const app = express();
