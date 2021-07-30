@@ -11,6 +11,8 @@ const registerController = require("./controllers/register");
 const imageController = require("./controllers/image");
 const profileController = require("./controllers/profile");
 
+const authentication = require("./middlewares/authentication").authentication;
+
 // const db = knex({
 //   client: "pg",
 //   connection: {
@@ -44,16 +46,24 @@ app.post("/api/register", (req, res) => {
   registerController.signupUser(req, res, db, bcrypt);
 });
 
-app.post("/api/detectface", (req, res) => {
+app.post("/api/detectface", authentication, (req, res) => {
   imageController.detectface(req, res);
 });
 
 app
-  .route("/api/profile/:id")
-  .get((req, res) => {})
-  .post((req, res) => {
-    profileController.updateEntriesCount(req, res, db);
+  .route("/api/profile")
+  .get(authentication, (req, res) => {
+    profileController.getProfile(req, res, db);
+  })
+  .put(authentication, (req, res) => {
+    profileController.updateProfile(req, res, db);
   });
+
+app.put("/api/profile/entry", authentication, (req, res) => {
+  profileController.updateEntriesCount(req, res, db);
+});
+
+app.get("/api/logout", authentication, loginController.logoutUser);
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {

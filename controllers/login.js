@@ -1,4 +1,7 @@
-exports.loginUser = (req, res, db, bcrypt) => {
+const jwt = require("jsonwebtoken");
+const client = require("../middlewares/authentication").client;
+
+const loginUser = (req, res, db, bcrypt) => {
   const { email, password } = req.body;
 
   if (!email || !password) {
@@ -20,7 +23,10 @@ exports.loginUser = (req, res, db, bcrypt) => {
           .select()
           .where({ email })
           .then((user) => {
-            return res.status(200).json({ user: user[0] });
+            const { email, id } = user[0];
+            const token = signToken(email);
+            saveToken(token, id);
+            return res.status(200).json({ id, token });
           })
           .catch((error) => {
             console.log("users db: " + error);
@@ -33,3 +39,20 @@ exports.loginUser = (req, res, db, bcrypt) => {
       return res.status(500).json({ error: "Login Database error" });
     });
 };
+
+const signToken = (email) => {
+  return jwt.sign(email, process.env.JWT_SECRET);
+};
+
+const saveToken = (token, id) => {
+  client.set(token, id);
+};
+
+const logoutUser = (req, res) => {
+  const token = req.token;
+  client.del(token, () => {
+    return res.status(200).json({ message: "Signed out" });
+  });
+};
+
+module.exports = { loginUser, signToken, saveToken, logoutUser };

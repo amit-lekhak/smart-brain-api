@@ -1,3 +1,6 @@
+const signToken = require("./login").signToken;
+const saveToken = require("./login").saveToken;
+
 exports.signupUser = (req, res, db, bcrypt) => {
   const { name, email, password } = req.body;
 
@@ -26,15 +29,18 @@ exports.signupUser = (req, res, db, bcrypt) => {
               .into("users")
               .returning("*")
               .then((user) => {
-                res
+                const { email, id } = user[0];
+                const token = signToken(email);
+                saveToken(token, id);
+                return res
                   .status(200)
-                  .json({ message: "user registered", user: user[0] });
+                  .json({ message: "user registered", user: user[0], token });
               });
           })
           .then(trx.commit)
           .catch(trx.rollback);
       }).catch((error) => {
-        console.log("error" + error);
+        console.log("error: " + error);
         return res.status(500).json({ error: "Insert Database error" });
       });
     })
