@@ -19,10 +19,10 @@ exports.signupUser = (req, res, db, bcrypt) => {
         trx
           .insert({ email, hash: hashedPassword })
           .into("login")
-          .returning("id")
-          .then((id) => {
+          .returning("email")
+          .then((loginEmail) => {
             return trx
-              .insert({ name, email, joined: new Date(), id: id[0] })
+              .insert({ name, email: loginEmail[0], joined: new Date() })
               .into("users")
               .returning("*")
               .then((user) => {
