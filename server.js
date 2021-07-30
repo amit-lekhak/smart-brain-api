@@ -47,7 +47,7 @@ app.post("/api/detectface", (req, res) => {
   imageController.detectface(req, res);
 });
 
-app.put("/api/profile", (req, res) => {
+app.post("/api/profile/:id", (req, res) => {
   imageController.updateEntriesCount(req, res, db);
 });
 

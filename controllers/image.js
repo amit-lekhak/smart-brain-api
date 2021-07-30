@@ -43,7 +43,7 @@ exports.detectface = (req, res) => {
 };
 
 exports.updateEntriesCount = (req, res, db) => {
-  const { id } = req.body;
+  const { id } = req.params;
 
   if (!id) {
     return res.status(400).json({ error: "No id found" });
