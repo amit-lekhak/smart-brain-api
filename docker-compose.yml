@@ -10,8 +10,7 @@ services:
     environment:
       POSTGRES_URI: postgres://test:test@postgres:5432/smart-brain-docker
       CLARIFAI_API_KEY: a455d719ab3141dca1ace32f070f9477
-    links:
-      - postgres
+      REDIS_URI: redis://redis:6379
     ports:
       - "8000:8000"
     volumes:
@@ -26,3 +25,8 @@ services:
     build: ./postgres
     ports:
       - "5432:5432"
+
+  redis:
+    image: redis:6.2.5
+    ports: 
+      - "6379:6379"

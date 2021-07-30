@@ -9,6 +9,7 @@ const morgan = require("morgan");
 const loginController = require("./controllers/login");
 const registerController = require("./controllers/register");
 const imageController = require("./controllers/image");
+const profileController = require("./controllers/profile");
 
 // const db = knex({
 //   client: "pg",
@@ -47,9 +48,12 @@ app.post("/api/detectface", (req, res) => {
   imageController.detectface(req, res);
 });
 
-app.post("/api/profile/:id", (req, res) => {
-  imageController.updateEntriesCount(req, res, db);
-});
+app
+  .route("/api/profile/:id")
+  .get((req, res) => {})
+  .post((req, res) => {
+    profileController.updateEntriesCount(req, res, db);
+  });
 
 const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
