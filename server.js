@@ -5,6 +5,8 @@ const knex = require("knex");
 require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const morgan = require("morgan");
+const compression = require("compression");
+const helmet = require("helmet");
 
 const loginController = require("./controllers/login");
 const registerController = require("./controllers/register");
@@ -31,6 +33,8 @@ const db = knex({
 const app = express();
 
 app.use(cors());
+app.use(helmet());
+app.use(compression());
 app.use(bodyParser.json());
 app.use(morgan("dev"));
 
