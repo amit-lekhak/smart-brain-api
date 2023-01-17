@@ -1,6 +1,6 @@
 # Smart-brain-api
 
-> Backend api for `Smart Brain App`
+> Backend api for `Smart Brain App` deployed at: https://smartbrainapi-u3ff.onrender.com
 
 * It uses docker compose to create images for: 
     - server with node
